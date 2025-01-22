@@ -76,7 +76,7 @@ public class PurchaseTransactionService {
         BigDecimal conversionRate = rates.get(targetCurrency);
 
         if (conversionRate == null) {
-            throw new CurrencyConversionException("The purchase cannot be converted to the target currency");
+            throw new CurrencyConversionException(Constant.CUSTOM_ERROR);
         }
 
         PurchaseTransactionConversionDTO dto = new PurchaseTransactionConversionDTO();

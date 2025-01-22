@@ -46,26 +46,29 @@ public class PurchaseTransactionController {
         @RequestParam("startDate")
         @NotBlank(message = "Start date cannot be blank.")
         @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Start date must be in the format 'yyyy-MM-dd'.")
-        String startDateStr,
+        String startDate,
 
         @RequestParam("endDate")
         @NotBlank(message = "End date cannot be blank.")
         @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "End date must be in the format 'yyyy-MM-dd'.")
-        String endDateStr
+        String endDate
     ) {
-        LocalDateTime startDate = LocalDate.parse(startDateStr, Constant.FORMAT).atStartOfDay();
-        LocalDateTime endDate = LocalDate.parse(endDateStr, Constant.FORMAT).atStartOfDay();
-        return service.findTransactions(startDate, endDate);
+        LocalDateTime startDateTime = LocalDate.parse(startDate, Constant.FORMAT).atStartOfDay();
+        LocalDateTime endDateTime = LocalDate.parse(endDate, Constant.FORMAT).atStartOfDay();
+        return service.findTransactions(startDateTime, endDateTime);
     }
 
     @GetMapping("/{id}/convert")
     public ResponseEntity<?> convertTransactionCurrency(@PathVariable Long id,
-                                                        @RequestParam String targetCurrency,
-                                                        @RequestParam String country) {
+                                                        @RequestParam String currency,
+                                                        @RequestParam(required = false) String country) {
         try {
             PurchaseTransaction transaction = service.findById(id)
                     .orElseThrow(() -> new RuntimeException("Transaction not found"));
-            PurchaseTransactionConversionDTO convertedTransaction = service.convertTransactionCurrency(transaction, targetCurrency, country);
+            PurchaseTransactionConversionDTO convertedTransaction = service.convertTransactionCurrency(transaction, currency, country);
+            if (convertedTransaction == null) {
+                throw new CurrencyConversionException(Constant.CUSTOM_ERROR);
+            }
             return ResponseEntity.ok(convertedTransaction);
         } catch (CurrencyConversionException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Currency Conversion Error", e.getMessage()));

@@ -119,7 +119,7 @@ public class PurchaseTransactionControllerTest {
         when(service.convertTransactionCurrency(eq(transaction), eq("Real"), eq(""))).thenReturn(conversionDTO);
 
         mockMvc.perform(get("/api/v1/purchase-transactions/1/convert")
-                .param("targetCurrency", "Real")
+                .param("currency", "Real")
                 .param("country", ""))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("Test Transaction"))
@@ -138,7 +138,8 @@ public class PurchaseTransactionControllerTest {
         when(service.convertTransactionCurrency(eq(transaction), eq("XYZ"), eq(""))).thenThrow(new CurrencyConversionException("The purchase cannot be converted to the target currency"));
 
         mockMvc.perform(get("/api/v1/purchase-transactions/1/convert")
-                .param("targetCurrency", "XYZ"))
+                .param("currency", "XYZ")
+                .param("country", "ASD"))
                 .andExpect(status().isBadRequest());
     }
 }
