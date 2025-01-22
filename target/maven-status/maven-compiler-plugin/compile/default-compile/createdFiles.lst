@@ -1,0 +1,9 @@
+com\rafaj2ee\service\PurchaseTransactionService.class
+com\rafaj2ee\controller\PurchaseTransactionController.class
+com\rafaj2ee\model\PurchaseTransaction.class
+com\rafaj2ee\DTO\PurchaseTransactionDTO.class
+com\rafaj2ee\CurrencyConversionApplication.class
+com\rafaj2ee\DTO\PurchaseTransactionConversionDTO.class
+com\rafaj2ee\util\Constant.class
+com\rafaj2ee\config\SwaggerConfig.class
+com\rafaj2ee\repository\PurchaseTransactionRepository.class
