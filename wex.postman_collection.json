@@ -1,0 +1,734 @@
+{
+	"info": {
+		"_postman_id": "6106310f-2bd1-40c3-ae4c-611b162072df",
+		"name": "wex",
+		"description": "Api Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6219928"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "purchase-transactions",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "convert",
+											"item": [
+												{
+													"name": "convertTransactionCurrency",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "*/*"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/v1/purchase-transactions/1/convert?currency=ZYX",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"v1",
+																"purchase-transactions",
+																"1",
+																"convert"
+															],
+															"query": [
+																{
+																	"key": "currency",
+																	"value": "ZYX",
+																	"description": "(Required) targetCurrency"
+																},
+																{
+																	"key": "country",
+																	"value": "Canada",
+																	"disabled": true
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "OK",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "*/*"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/v1/purchase-transactions/:id/convert?targetCurrency=<string>",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"v1",
+																		"purchase-transactions",
+																		":id",
+																		"convert"
+																	],
+																	"query": [
+																		{
+																			"key": "targetCurrency",
+																			"value": "<string>",
+																			"description": "(Required) targetCurrency"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "*/*"
+																}
+															],
+															"cookie": [],
+															"body": "{}"
+														},
+														{
+															"name": "Unauthorized",
+															"originalRequest": {
+																"method": "GET",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/api/v1/purchase-transactions/:id/convert?targetCurrency=<string>",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"v1",
+																		"purchase-transactions",
+																		":id",
+																		"convert"
+																	],
+																	"query": [
+																		{
+																			"key": "targetCurrency",
+																			"value": "<string>",
+																			"description": "(Required) targetCurrency"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "Unauthorized",
+															"code": 401,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														},
+														{
+															"name": "Forbidden",
+															"originalRequest": {
+																"method": "GET",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/api/v1/purchase-transactions/:id/convert?targetCurrency=<string>",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"v1",
+																		"purchase-transactions",
+																		":id",
+																		"convert"
+																	],
+																	"query": [
+																		{
+																			"key": "targetCurrency",
+																			"value": "<string>",
+																			"description": "(Required) targetCurrency"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "Forbidden",
+															"code": 403,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														},
+														{
+															"name": "Not Found",
+															"originalRequest": {
+																"method": "GET",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/api/v1/purchase-transactions/:id/convert?targetCurrency=<string>",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"v1",
+																		"purchase-transactions",
+																		":id",
+																		"convert"
+																	],
+																	"query": [
+																		{
+																			"key": "targetCurrency",
+																			"value": "<string>",
+																			"description": "(Required) targetCurrency"
+																		}
+																	],
+																	"variable": [
+																		{
+																			"key": "id"
+																		}
+																	]
+																}
+															},
+															"status": "Not Found",
+															"code": 404,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "getTransactions",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/purchase-transactions?endDate=2025-12-31&startDate=2024-12-31",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"purchase-transactions"
+											],
+											"query": [
+												{
+													"key": "endDate",
+													"value": "2025-12-31",
+													"description": "(Required) endDate"
+												},
+												{
+													"key": "startDate",
+													"value": "2024-12-31",
+													"description": "(Required) startDate"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions?endDate=<string>&startDate=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													],
+													"query": [
+														{
+															"key": "endDate",
+															"value": "<string>",
+															"description": "(Required) endDate"
+														},
+														{
+															"key": "startDate",
+															"value": "<string>",
+															"description": "(Required) startDate"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "[\n  {\n    \"amount\": \"<number>\",\n    \"description\": \"<string>\",\n    \"transactionDate\": \"<dateTime>\",\n    \"id\": \"<long>\"\n  },\n  {\n    \"amount\": \"<number>\",\n    \"description\": \"<string>\",\n    \"transactionDate\": \"<dateTime>\",\n    \"id\": \"<long>\"\n  }\n]"
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions?endDate=<string>&startDate=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													],
+													"query": [
+														{
+															"key": "endDate",
+															"value": "<string>",
+															"description": "(Required) endDate"
+														},
+														{
+															"key": "startDate",
+															"value": "<string>",
+															"description": "(Required) startDate"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Forbidden",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions?endDate=<string>&startDate=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													],
+													"query": [
+														{
+															"key": "endDate",
+															"value": "<string>",
+															"description": "(Required) endDate"
+														},
+														{
+															"key": "startDate",
+															"value": "<string>",
+															"description": "(Required) startDate"
+														}
+													]
+												}
+											},
+											"status": "Forbidden",
+											"code": 403,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions?endDate=<string>&startDate=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													],
+													"query": [
+														{
+															"key": "endDate",
+															"value": "<string>",
+															"description": "(Required) endDate"
+														},
+														{
+															"key": "startDate",
+															"value": "<string>",
+															"description": "(Required) startDate"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "saveTransaction",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"purchase-transactions"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\",\n  \"id\": \"<long>\"\n}"
+										},
+										{
+											"name": "Created",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Forbidden",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													]
+												}
+											},
+											"status": "Forbidden",
+											"code": 403,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\",\n  \"transactionDate\": \"<dateTime>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/purchase-transactions",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"purchase-transactions"
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "treasury",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/rates_of_exchange?sort=-record_date&format=json&page[number]=1&page[size]=10&filter=currency:eq:Real,record_date:eq:2024-12-31",
+					"protocol": "https",
+					"host": [
+						"api",
+						"fiscaldata",
+						"treasury",
+						"gov"
+					],
+					"path": [
+						"services",
+						"api",
+						"fiscal_service",
+						"v1",
+						"accounting",
+						"od",
+						"rates_of_exchange"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "-record_date"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "page[number]",
+							"value": "1"
+						},
+						{
+							"key": "page[size]",
+							"value": "10"
+						},
+						{
+							"key": "filter",
+							"value": "record_date:eq:2024-12-31",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "currency:eq:Real,record_date:eq:2024-12-31"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//localhost:9090"
+		}
+	]
+}
