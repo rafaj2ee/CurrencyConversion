@@ -1,6 +1,7 @@
 # CurrencyConversion
-1- Here what should be done to run the project, first you will need docker desktop installed
-on the project´s root directory, type <br/>
+1- Here what should be done to run the project, first you will need git and docker desktop installed
+clone the project with<br/>
+git clone https://github.com/rafaj2ee/CurrencyConversion.git [Enter] <br/>on the project´s root directory, type <br/>
 2- docker-compose build [Enter] <br/>
 after building the project <br/>
 3- docker-compose up [Enter] <br/>
