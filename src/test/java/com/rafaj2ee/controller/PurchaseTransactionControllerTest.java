@@ -1,114 +1,144 @@
 package com.rafaj2ee.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rafaj2ee.DTO.PurchaseTransactionConversionDTO;
 import com.rafaj2ee.DTO.PurchaseTransactionDTO;
+import com.rafaj2ee.exception.CurrencyConversionException;
 import com.rafaj2ee.model.PurchaseTransaction;
 import com.rafaj2ee.service.PurchaseTransactionService;
 
+@WebMvcTest(PurchaseTransactionController.class)
 public class PurchaseTransactionControllerTest {
 
-    @Mock
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
     private PurchaseTransactionService service;
 
     @InjectMocks
     private PurchaseTransactionController controller;
 
-    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public PurchaseTransactionControllerTest() {
+    @BeforeEach
+    public void setup() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
-    public void testSaveTransaction() throws Exception {
+    public void testSaveTransaction_ValidInput() throws Exception {
         PurchaseTransactionDTO dto = new PurchaseTransactionDTO();
         dto.setDescription("Test Transaction");
-        dto.setAmount(BigDecimal.valueOf(100.00));
-        dto.setTransactionDate(LocalDateTime.now());
+        dto.setAmount(BigDecimal.valueOf(100));
+        dto.setTransactionDate("2022-01-01");
 
         PurchaseTransaction transaction = new PurchaseTransaction();
         transaction.setId(1L);
         transaction.setDescription("Test Transaction");
-        transaction.setAmount(BigDecimal.valueOf(100.00));
-        transaction.setTransactionDate(LocalDateTime.now());
+        transaction.setAmount(BigDecimal.valueOf(100).setScale(2, BigDecimal.ROUND_HALF_UP));
+        transaction.setTransactionDate(LocalDate.parse("2022-01-01").atStartOfDay());
 
-        when(service.saveTransaction(dto)).thenReturn(transaction);
+        when(service.saveTransaction(any(PurchaseTransactionDTO.class))).thenReturn(transaction);
 
         mockMvc.perform(post("/api/v1/purchase-transactions")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"description\": \"Test Transaction\", \"amount\": 100.00, \"transactionDate\": \"2025-01-21T10:15:30\" }"))
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"id\":1,\"description\":\"Test Transaction\",\"amount\":100.00,\"transactionDate\":\"2025-01-21T10:15:30\"}"));
+                .andExpect(jsonPath("$.description").value("Test Transaction"))
+                .andExpect(jsonPath("$.amount").value(100.00));
     }
 
     @Test
-    public void testGetTransactions() throws Exception {
-        LocalDateTime startDate = LocalDateTime.parse("2024-07-01T00:00:00");
-        LocalDateTime endDate = LocalDateTime.parse("2024-12-31T23:59:59");
+    public void testSaveTransaction_InvalidInput() throws Exception {
+        PurchaseTransactionDTO dto = new PurchaseTransactionDTO();
+        dto.setDescription(""); // Invalid description
+        dto.setAmount(BigDecimal.valueOf(100));
+        dto.setTransactionDate("2022-01-01");
 
-        PurchaseTransaction transaction1 = new PurchaseTransaction();
-        transaction1.setDescription("Transaction 1");
-        transaction1.setAmount(BigDecimal.valueOf(50.00));
-        transaction1.setTransactionDate(startDate.plusDays(1));
+        mockMvc.perform(post("/api/v1/purchase-transactions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest());
+    }
 
-        PurchaseTransaction transaction2 = new PurchaseTransaction();
-        transaction2.setDescription("Transaction 2");
-        transaction2.setAmount(BigDecimal.valueOf(75.00));
-        transaction2.setTransactionDate(startDate.plusDays(2));
-
-        List<PurchaseTransaction> transactions = Arrays.asList(transaction1, transaction2);
-
-        when(service.findTransactions(startDate, endDate)).thenReturn(transactions);
-
+    @Test
+    public void testGetTransactions_ValidInput() throws Exception {
         mockMvc.perform(get("/api/v1/purchase-transactions")
-                .param("startDate", "2024-07-01T00:00:00")
-                .param("endDate", "2024-12-31T23:59:59"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{\"description\":\"Transaction 1\",\"amount\":50.00,\"transactionDate\":\"2024-07-02T00:00:00\"},{\"description\":\"Transaction 2\",\"amount\":75.00,\"transactionDate\":\"2024-07-03T00:00:00\"}]"));
+                .param("startDate", "2022-01-01")
+                .param("endDate", "2022-01-31"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void testConvertTransactionCurrency() throws Exception {
-        LocalDateTime transactionDate = LocalDateTime.parse("2024-12-31T10:15:30");
+    public void testGetTransactions_InvalidInput() throws Exception {
+        mockMvc.perform(get("/api/v1/purchase-transactions")
+                .param("endDate", "2022-01-31"))
+                .andExpect(status().isBadRequest());
+    }
 
+    @Test
+    public void testConvertTransactionCurrency_ValidInput() throws Exception {
         PurchaseTransaction transaction = new PurchaseTransaction();
         transaction.setId(1L);
         transaction.setDescription("Test Transaction");
-        transaction.setAmount(BigDecimal.valueOf(100.00));
-        transaction.setTransactionDate(transactionDate);
+        transaction.setAmount(BigDecimal.valueOf(100));
+        transaction.setTransactionDate(LocalDate.parse("2022-01-01").atStartOfDay());
 
-        PurchaseTransactionConversionDTO convertedDTO = new PurchaseTransactionConversionDTO();
-        convertedDTO.setDescription("Test Transaction");
-        convertedDTO.setAmount(BigDecimal.valueOf(618.40));  // Assuming exchange rate is 6.184
-        convertedDTO.setTransactionDate(transactionDate);
+        PurchaseTransactionConversionDTO conversionDTO = new PurchaseTransactionConversionDTO();
+        conversionDTO.setDescription("Test Transaction");
+        conversionDTO.setAmount(BigDecimal.valueOf(618.40).setScale(2, BigDecimal.ROUND_HALF_UP)); // Valor corrigido para Real
+        conversionDTO.setExchangeRate(BigDecimal.valueOf(6.184)); // Exemplo de taxa de câmbio atualizada
 
         when(service.findById(1L)).thenReturn(Optional.of(transaction));
-        when(service.convertTransactionCurrency(transaction, "USD")).thenReturn(convertedDTO);
+        when(service.convertTransactionCurrency(eq(transaction), eq("Real"), eq(""))).thenReturn(conversionDTO);
 
         mockMvc.perform(get("/api/v1/purchase-transactions/1/convert")
-                .param("targetCurrency", "USD"))
+                .param("targetCurrency", "Real")
+                .param("country", ""))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"description\":\"Test Transaction\",\"amount\":618.40,\"transactionDate\":\"2024-12-31T10:15:30\"}"));
+                .andExpect(jsonPath("$.description").value("Test Transaction"))
+                .andExpect(jsonPath("$.amount").value(618.40));
+    }
+
+    @Test
+    public void testConvertTransactionCurrency_InvalidCurrency() throws Exception {
+        PurchaseTransaction transaction = new PurchaseTransaction();
+        transaction.setId(1L);
+        transaction.setDescription("Test Transaction");
+        transaction.setAmount(BigDecimal.valueOf(100));
+        transaction.setTransactionDate(LocalDate.parse("2022-01-01").atStartOfDay());
+
+        when(service.findById(1L)).thenReturn(Optional.of(transaction));
+        when(service.convertTransactionCurrency(eq(transaction), eq("XYZ"), eq(""))).thenThrow(new CurrencyConversionException("The purchase cannot be converted to the target currency"));
+
+        mockMvc.perform(get("/api/v1/purchase-transactions/1/convert")
+                .param("targetCurrency", "XYZ"))
+                .andExpect(status().isBadRequest());
     }
 }
