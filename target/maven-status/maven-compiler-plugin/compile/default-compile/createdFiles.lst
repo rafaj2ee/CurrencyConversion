@@ -1,8 +1,10 @@
 com\rafaj2ee\controller\PurchaseTransactionController.class
 com\rafaj2ee\exception\CurrencyConversionException.class
 com\rafaj2ee\exception\ErrorResponse.class
+com\rafaj2ee\util\SQLiteDialect.class
 com\rafaj2ee\service\PurchaseTransactionService.class
 com\rafaj2ee\model\PurchaseTransaction.class
+com\rafaj2ee\util\SQLiteIdentityColumnSupport.class
 com\rafaj2ee\DTO\PurchaseTransactionDTO.class
 com\rafaj2ee\CurrencyConversionApplication.class
 com\rafaj2ee\exception\GlobalExceptionHandler.class

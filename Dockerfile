@@ -8,7 +8,7 @@ VOLUME /tmp
 EXPOSE 9090
 
 # The 'jar' argument that can be passed during the Docker image build
-ARG JAR_FILE=target/*.jar
+ARG JAR_FILE=*.jar
 
 # Copy the JAR file to the Docker container
 COPY ${JAR_FILE} app.jar

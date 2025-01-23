@@ -36,12 +36,17 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- PostgreSQL dependency -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.14</version>
+			<version>42.2.23</version>
 		</dependency>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.36.0.3</version>
+		</dependency>
+
 
 		<!-- Swagger dependencies -->
 		<dependency>
@@ -92,9 +97,10 @@
 			<version>29.0-jre</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-validation</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
